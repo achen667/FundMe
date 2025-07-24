@@ -7,11 +7,12 @@ import {HelperConfig} from "./HelperConfig.s.sol";
 
 contract DeployFundMe is Script {
     function run() external returns (FundMe) {
-        vm.startBroadcast();
+        
         HelperConfig helperConfig = new HelperConfig();
         address priceFeedAddress = helperConfig.getConfigByChainId(
             block.chainid
         );
+        vm.startBroadcast();
         FundMe fundMe = new FundMe(priceFeedAddress);
         vm.stopBroadcast();
         return fundMe;

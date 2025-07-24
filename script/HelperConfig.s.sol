@@ -30,11 +30,11 @@ contract HelperConfig is ConfigConstants, Script {
 
     function getConfigByChainId(
         uint256 chainId
-    ) public view returns (address priceFeed) {
+    ) public returns (address priceFeed) {
         if (networkConfigs[chainId].priceFeed != address(0)) {
             return networkConfigs[chainId].priceFeed;
         } else if (chainId == LOCAL_CHAIN_ID) {
-            //return getOrCreateAnvilEthConfig();
+            return getOrCreateAnvilEthConfig().priceFeed;
         } else {
             console2.log("No config found for chainId:", chainId);
             revert("No config found for this chainId");
