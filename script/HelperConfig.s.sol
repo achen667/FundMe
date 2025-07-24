@@ -28,9 +28,7 @@ contract HelperConfig is ConfigConstants, Script {
         networkConfigs[ZKSYNC_SEPOLIA_CHAIN_ID] = getZkSyncSepoliaConfig();
     }
 
-    function getConfigByChainId(
-        uint256 chainId
-    ) public returns (address priceFeed) {
+    function getConfigByChainId(uint256 chainId) public returns (address priceFeed) {
         if (networkConfigs[chainId].priceFeed != address(0)) {
             return networkConfigs[chainId].priceFeed;
         } else if (chainId == LOCAL_CHAIN_ID) {
@@ -42,21 +40,11 @@ contract HelperConfig is ConfigConstants, Script {
     }
 
     function getEthSepoliaConfig() public pure returns (NetworkConfig memory) {
-        return
-            NetworkConfig({
-                priceFeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306
-            });
+        return NetworkConfig({priceFeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306});
     }
 
-    function getZkSyncSepoliaConfig()
-        public
-        pure
-        returns (NetworkConfig memory)
-    {
-        return
-            NetworkConfig({
-                priceFeed: 0xfEefF7c3fB57d18C5C6Cdd71e45D2D0b4F9377bF
-            });
+    function getZkSyncSepoliaConfig() public pure returns (NetworkConfig memory) {
+        return NetworkConfig({priceFeed: 0xfEefF7c3fB57d18C5C6Cdd71e45D2D0b4F9377bF});
     }
 
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
@@ -68,10 +56,7 @@ contract HelperConfig is ConfigConstants, Script {
         console2.log(unicode"⚠️ You have deployed a mock contract!");
         console2.log("Make sure this was intentional");
         vm.startBroadcast();
-        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(
-            DECIMALS,
-            INITIAL_PRICE
-        );
+        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(DECIMALS, INITIAL_PRICE);
         vm.stopBroadcast();
 
         localNetworkConfig = NetworkConfig({priceFeed: address(mockPriceFeed)});

@@ -36,11 +36,7 @@ contract FundMeTest is Test, Script {
 
     function testReceive() public funded {
         // Assert
-        assertEq(
-            fundMe.s_addressToAmountFunded(address(USER)),
-            SEND_VALUE,
-            "Amount funded does not match sent value"
-        );
+        assertEq(fundMe.s_addressToAmountFunded(address(USER)), SEND_VALUE, "Amount funded does not match sent value");
     }
 
     function testReceiveRevert() public {
@@ -93,11 +89,7 @@ contract FundMeTest is Test, Script {
 
         uint256 originalFundMeBalance = address(fundMe).balance; // This is for people running forked tests!
 
-        for (
-            uint160 i = startingFunderIndex;
-            i < numberOfFunders + startingFunderIndex;
-            i++
-        ) {
+        for (uint160 i = startingFunderIndex; i < numberOfFunders + startingFunderIndex; i++) {
             // we get hoax from stdcheats
             // prank + deal
             hoax(address(i), STARTING_USER_BALANCE);
@@ -112,15 +104,10 @@ contract FundMeTest is Test, Script {
         vm.stopPrank();
 
         assert(address(fundMe).balance == 0);
-        assert(
-            startingFundedeBalance + startingOwnerBalance ==
-                fundMe.i_owner().balance
-        );
+        assert(startingFundedeBalance + startingOwnerBalance == fundMe.i_owner().balance);
 
-        uint256 expectedTotalValueWithdrawn = ((numberOfFunders) * SEND_VALUE) +
-            originalFundMeBalance;
-        uint256 totalValueWithdrawn = fundMe.i_owner().balance -
-            startingOwnerBalance;
+        uint256 expectedTotalValueWithdrawn = ((numberOfFunders) * SEND_VALUE) + originalFundMeBalance;
+        uint256 totalValueWithdrawn = fundMe.i_owner().balance - startingOwnerBalance;
 
         assert(expectedTotalValueWithdrawn == totalValueWithdrawn);
     }
